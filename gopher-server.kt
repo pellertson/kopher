@@ -1,7 +1,8 @@
 import java.io.OutputStream
-import java.io.FileDescriptor
-import java.io.FileOutputStream
+//import java.io.FileDescriptor
+//import java.io.FileOutputStream
 import java.net.ServerSocket
+import java.util.Scanner
 
 const val PORT = 70
 const val HOST = "localhost"
@@ -42,5 +43,14 @@ fun main() {
 		GopherEntry('1', "Look here", "/", "bitreich.org"),
 		GopherEntry('i', "A comment")
 	)
-	renderGopherPage(entries, FileOutputStream(FileDescriptor.out))
+
+	val server = ServerSocket(PORT)
+	val client = server.accept()
+
+	val sc = Scanner(client.inputStream)
+
+	// NEXT: work on processing a path from the tcp port
+	println(sc.nextLine())
+
+	renderGopherPage(entries, client.getOutputStream())
 }
