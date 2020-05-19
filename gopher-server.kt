@@ -17,12 +17,12 @@ class GopherEntry(
 		this(type, display, path, HOST, PORT)
 }
 
+val GopherEntry.rendered: String
+	get() = "$type$display\t$path\t$server\t$port\r\n"
+
 fun renderGopherPage(entries: List<GopherEntry>, out: OutputStream) {
 	for (entry in entries) {
-		with (entry) {
-			val string = "$type$display\t$path\t$server\t$port\r\n"
-			out.write(string.toByteArray())
-		}
+		out.write(entry.rendered.toByteArray())
 	}
 	out.flush()
 	out.close()
