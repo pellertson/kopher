@@ -13,8 +13,15 @@ class GopherEntry(
 		val path: String,
 		val server: String,
 		val port: Int) {
+
+	constructor(type: Char, display: String):
+		this(type, display, "")
+
 	constructor(type: Char, display: String, path: String) :
 		this(type, display, path, HOST, PORT)
+
+	constructor(type: Char, display: String, path: String, host: String):
+		this(type, display, path, host, PORT)
 }
 
 val GopherEntry.rendered: String
@@ -32,7 +39,8 @@ fun main() {
 	var entries = listOf(
 		GopherEntry('1', "Test display string", "/"),
 		GopherEntry('0', "About me", "/about-me.txt"),
-		GopherEntry('1', "Look here", "/", "bitreich.org", 70)
+		GopherEntry('1', "Look here", "/", "bitreich.org"),
+		GopherEntry('i', "A comment")
 	)
 	renderGopherPage(entries, FileOutputStream(FileDescriptor.out))
 }
