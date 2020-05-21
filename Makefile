@@ -5,7 +5,7 @@ KTCARGS=-include-runtime
 all: build
 
 build:
-	[ -f config.kt.def ] || cp config.kt.def config.kt
+	[ -f config.kt ] || cp config.kt.def config.kt
 	kotlinc $(SRC) $(KTCARGS) -d $(DEST)
 
 clean:
