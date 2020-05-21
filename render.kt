@@ -1,6 +1,7 @@
 package kopher.rendering
 
 import java.io.OutputStream
+import java.io.File
 import kopher.config.HOST
 import kopher.config.PORT
 
@@ -34,3 +35,8 @@ fun renderGopherPage(entries: List<GopherEntry>, out: OutputStream) {
 
 fun renderGopherPage(entry: GopherEntry, out: OutputStream) =
 	renderGopherPage(listOf(entry), out)
+
+fun renderFile(file: File, out:OutputStream) {
+	out.write(file.readBytes())
+	out.write("\n.\n".toByteArray())
+}

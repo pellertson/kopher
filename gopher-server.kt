@@ -28,7 +28,7 @@ fun main() {
 	val file = File(CONTENT_HOME + dir)
 
 	if (file.exists()){
-		renderGopherPage(listOf(GopherEntry('3', "Error")), out)
+		renderFile(file, out)
 	} else {
 		renderGopherPage(entries, out)
 	}
