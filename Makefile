@@ -1,5 +1,5 @@
-SRC=gopher-server.kt config.kt render.kt
-DEST=gopher-server.jar
+SRC=kopher.kt config.kt render.kt
+DEST=kopher.jar
 KTCARGS=-include-runtime
 
 all: build

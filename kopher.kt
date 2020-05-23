@@ -7,18 +7,7 @@ import java.util.Scanner
 import kopher.config.*
 import kopher.rendering.*
 
-// i don't know if if need this yet but it's here
-
 fun main() {
-	// just for testing purposes
-	val entries = listOf(
-		GopherEntry('1', "Test display string", "/"),
-		GopherEntry('0', "About me", "/about-me.txt"),
-		GopherEntry('1', "Look here", "/", "bitreich.org"),
-		GopherEntry('i', "A comment"),
-		GopherEntry('0', "A Makefile", "/Makefile")
-	)
-
 	// connect to the port and set up a way to output to said port
 	val server = ServerSocket(PORT)
 	while (true) {
@@ -26,13 +15,21 @@ fun main() {
 		val out = client.getOutputStream()
 		val sc = Scanner(client.inputStream)
 
-		val dir = sc.nextLine()
-		val file = File(CONTENT_HOME + dir)
+		val dir = sc.nextLine().trim()
+		var file = File(CONTENT_HOME + dir)
 
-		if (file.exists()){
+		if (file.isFile()){
 			renderFile(file, out)
+		} else if (file.isDirectory()) {
+			// try to find a “gophermap” file in the current directory
+			file = File(file.getPath() + "/gophermap")
+			if (file.isFile()) {
+				renderGophermap(file, out)
+			} else {
+				renderDirectory(file.walk().maxDepth(1), out)
+			}
 		} else {
-			renderGopherPage(entries, out)
+			renderErrorPage(out)
 		}
 
 		out.flush()
